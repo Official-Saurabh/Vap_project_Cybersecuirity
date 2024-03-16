@@ -40,7 +40,7 @@ def Decrypt (Symmetric_data, Asymmetric_data, Private_key):
             f = Fernet(key)
             decrypted_data = f.decrypt(data)
 
-            with open('test_result.pdf', 'wb')as file:
+            with open('test_result.mp4', 'wb')as file:
                 file.write(decrypted_data)
 
         Symmetric_Decreption(Symmetric_data, "Symmetric_Secret.key")
@@ -59,7 +59,7 @@ def Decrypt (Symmetric_data, Asymmetric_data, Private_key):
             f = Fernet(key)
             decrypted_data = f.decrypt(data)
 
-            with open('test_result.pdf', 'wb')as file:
+            with open('test_result.mp4', 'wb')as file:
                 file.write(decrypted_data)
 
         Symmetric_Decreption(Symmetric_data, "Symmetric_Secret.key")
