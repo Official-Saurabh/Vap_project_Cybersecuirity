@@ -40,7 +40,11 @@ def Decrypt (Symmetric_data, Asymmetric_data, Private_key):
             f = Fernet(key)
             decrypted_data = f.decrypt(data)
 
-            with open('test_result.mp4', 'wb')as file:
+            original_filename, _, original_format = filename.rpartition(".")
+            original_filename = original_filename.rpartition(".")[0]  # Remove encryption extensions
+            output_filename = original_filename + "." + original_format  # Construct original filename
+
+            with open(output_filename, 'wb') as file:  # Use original filename
                 file.write(decrypted_data)
 
         Symmetric_Decreption(Symmetric_data, "Symmetric_Secret.key")
@@ -59,7 +63,11 @@ def Decrypt (Symmetric_data, Asymmetric_data, Private_key):
             f = Fernet(key)
             decrypted_data = f.decrypt(data)
 
-            with open('test_result.mp4', 'wb')as file:
+            original_filename, _, original_format = filename.rpartition(".")
+            original_filename = original_filename.rpartition(".")[0]  # Remove encryption extensions
+            output_filename = original_filename + "." + original_format  # Construct original filename
+
+            with open(output_filename, 'wb') as file:  # Use original filename
                 file.write(decrypted_data)
 
         Symmetric_Decreption(Symmetric_data, "Symmetric_Secret.key")
