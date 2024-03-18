@@ -11,21 +11,21 @@ import rsa
 
 def Encrypt(filename, public_key):
     #hasing
-    def hash_file(filename):
-        h = hashlib.sha256()
-        with open(filename,'rb') as file:
-            chunk = 0
-            while chunk != b'':
-                chunk = file.read(65536)
-                h.update(chunk)
-        return h.hexdigest()
-
-    hash = hash_file(filename)
-    # print(hash)
-
-    #saving hased file
-    with open('hashed.txt', 'w') as file:
-        file.write(hash)
+    # def hash_file(filename):
+    #     h = hashlib.sha256()
+    #     with open(filename,'rb') as file:
+    #         chunk = 0
+    #         while chunk != b'':
+    #             chunk = file.read(65536)
+    #             h.update(chunk)
+    #     return h.hexdigest()
+    #
+    # hash = hash_file(filename)
+    # # print(hash)
+    #
+    # #saving hased file
+    # with open('hashed.txt', 'w') as file:
+    #     file.write(hash)
 
     #key generation
     key = Fernet.generate_key()
@@ -43,8 +43,12 @@ def Encrypt(filename, public_key):
         f = Fernet(key)
         encrypted_data = f.encrypt(data)
 
-        with open('Symmetric.txt', 'wb')as file:
+        output_filename = filename + '.aes'
+        with open(output_filename, 'wb') as file:
             file.write(encrypted_data)
+
+        # with open('Symmetric.txt', 'wb')as file:
+        #     file.write(encrypted_data)
 
     Symmetric_Encryption(filename, key)
 
@@ -55,17 +59,21 @@ def Encrypt(filename, public_key):
     #asymmetric encryption
     def Asymmetric_Encryption(filename, public_key):
         data = filename
-        # with open(filename, 'rb')as file:
-        #     data = file.read()
+        with open(filename, 'rb')as file:
+            data = file.read()
 
         with open('public.pem', 'rb') as file:
             public_key = rsa.PublicKey.load_pkcs1(file.read())
 
         encrypted_data = rsa.encrypt(data, public_key)
 
-        with open('Asymmetric.txt', 'wb') as file:
+        output_filename = filename + '.rsa'
+        with open(output_filename, 'wb') as file:
             file.write(encrypted_data)
 
-    Asymmetric_Encryption(key, public_key)
+        # with open('Asymmetric.txt', 'wb') as file:
+        #     file.write(encrypted_data)
+
+    Asymmetric_Encryption("Symmetric_key.key", public_key)
 
 
