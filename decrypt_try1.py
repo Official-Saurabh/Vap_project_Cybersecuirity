@@ -250,10 +250,23 @@ def create_output_directory(directory_name):
     if not os.path.exists(directory_name):
         os.makedirs(directory_name)
 
-def Decrypt(directory, private_key_file):
+def Decrypt(directory):
     # Load the private RSA key
-    with open(private_key_file, 'rb') as file:
-        private_key = rsa.PrivateKey.load_pkcs1(file.read())
+    def find_file(filename, start_dir):
+        for dirpath, dirnames, filenames in os.walk(start_dir):
+            if filename in filenames:
+                filepath = os.path.join(dirpath, filename)
+                #print(f"File found: {filepath}")
+                # Read the file content here (replace with your reading logic)
+                with open(filepath, 'rb') as file:
+                    private_key = rsa.PrivateKey.load_pkcs1(file.read())
+                return  private_key # Exit the function after finding the file
+
+    pfile = "private.pem"
+    start_dir = "/home/saurabh-singh/"
+    # with open(private_key_file, 'rb') as file:
+    #     private_key = rsa.PrivateKey.load_pkcs1(file.read())
+    private_key = find_file(pfile, start_dir)
 
     # Decompress the encrypted files within the directory
     decompress_directory(directory, directory)
